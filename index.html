@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-UK">
+<head>
+<meta charset="UTF-8">
+<link href="./main.css" rel="stylesheet" type="text/css" media="all">
+<script type="text/javascript">
+let locations = [
+	{
+		name: "eyes",
+		x: 315,
+		y: 139,
+		text: "The eyes have a 19% chance of injury.<br/>Many times when there is an injury to the eyes permanent damage is caused, leading to partially or complete blindness.",
+	},
+	{
+		name: "head",
+		x: 195,
+		y: 157,
+		text: "The head, face, and ears have a 15% chance of injury.<br/>The main injury here is in hearing. The short impusle and loud sound of the fireworks cause trauma to the eardrum. The younger the person is the more extreme the injury can be. Almost every irreversible ear injury happens in those under the age of 10.",
+	},
+	{
+		name: "hand",
+		x: 384,
+		y: 167,
+		text: "The hands and fingers have a 28% chance of injury.<br/>The firework sprinkler is the most common culprit for these injuries. The sprinklers can burn at temperatures near 2,000 degrees Fahrenheit, which is hot enough to melt some metals. ",
+	},
+	{
+		name: "arm",
+		x: 188,
+		y: 233,
+		text: "The arms have a 4% chance of injury.<br/>Although the arms are less likely to be injuried, these injuries can be severe. Forty-four percent of all injuries from fireworks are burns.",
+	},
+	{
+		name: "trunk",
+		x: 266,
+		y: 302,
+		text: "The torso has a 10% chance of injury.<br/>The torso, like the arms, often is injuried with burns. The burns from fireworks can range from small first-degree to intensive third-degree. These burns can cause scars that never fade. ",
+	},
+	{
+		name: "leg",
+		x: 249,
+		y: 461,
+		text: "The legs have a 24% chance of injury.<br/>The legs can recieve burns as well, yet burns are not the only form of injury. The less extreme injuries can include bruises, bumps, broken bones, and cuts.",
+	},
+],
+RADIUS = 30
+function main() {
+	let canvas = document.getElementById("canvas"),
+	ctx = canvas.getContext('2d'),
+	container = document.getElementById("left"),
+	img = document.getElementById("baseimg")
+	ctx.clearRect(0, 0, canvas.width, canvas.height)
+	ctx.fillStyle = window.getComputedStyle(container).getPropertyValue("background-color")
+	ctx.fillRect(0, 0, canvas.width, canvas.height)
+	ctx.drawImage(img, 0, 0)
+	ctx.strokeStyle = "#000000"
+	for (let loc of locations) {
+		ctx.beginPath();
+		ctx.arc(loc.x, loc.y, RADIUS, 0, Math.PI*2)
+		ctx.stroke()
+	}
+	document.getElementById("canvas").addEventListener("click",onClickCanvas)
+}
+function onClickCanvas(event) {
+	let ex = event.offsetX, ey = event.offsetY
+	for (let loc of locations) {
+		if (((loc.x-ex)**2+(loc.y-ey)**2)**0.5 < RADIUS) {
+			document.getElementById("box1").innerHTML = loc.text
+			break
+		}
+	}
+}
+function onClickButton() {
+	for (let x of ["prevention","references"]) {
+		let el = document.getElementById(x)
+		el.style.display = (el.style.display=="none") ? "block" : "none"
+	}
+}
+</script>
+</head>
+<body onload="main()">
+<div id="content" class="flexbox">
+<div id="left" class="sidebar">
+	<img id="baseimg" class="hidden" src="./image_person.png"/>
+	<canvas id="canvas" width="532" height="532" style="width:532px; height:532px"/>
+</div>
+<div id="right" class="sidebar">
+	<div id="box1" class="subsection">
+Click the highlighted spots on the diagram for more information.
+	</div>
+	<div id="box2" class="subsection">
+		<button onclick="onClickButton()">Info/References</button><br/>
+		<p id="prevention">
+Prevention Methods<br/>
+Make sure not to use homemade fireworks.<br/>
+Never allow young children to play with fireworks.<br/>
+Make sure there is adult supervision.<br/>
+Never place any part of your body directly over a firework, even when trying to light the fuse.<br/>
+Never re-light or pick up fireworks that have not ignited fully.<br/>
+Only light one firework at a time.<br/>
+Never set fireworks off in metal or glass containers.<br/>
+Keep a bucket of water or a garden hose near by and always drench the spent firework in water to prevent fires when throwing them out.<br/>
+Brown paper packaged fireworks are made for professional displays and should not be bought by general public.<br/>
+Only buy and use fireworks if it is legal in your area. The guildlines can change from city to city so check what the guidelines are for your area.<br/>
+Make sure everyone is a safe distance from the display and it is always good to have earmuffs or ear plugs.<br/>
+If any injuries do happen, call 911 immediately.
+		</p>
+		<p id="references" style="display:none;">
+Fireworks. (2020, March 17). Retrieved from <a href="https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Fireworks">https://www.cpsc.gov/Safety-Education/Safety-Education-Centers/Fireworks</a><br/>
+Five Minute Weekly Tip Fireworks - Family Health - CDC. (2015, June 2). Retrieved from <a href="https://www.cdc.gov/family/minutes/tips/fireworks/">https://www.cdc.gov/family/minutes/tips/fireworks/</a><br/>
+Lenglinger, M. A., Zorn, M., Pilger, D., von Sonnleithner, C., Rossel, M., Salchow, D. J., Bertelmann, E. (2020). Firework-inflicted ocular trauma in children and adults in an urban German setting. European Journal of Ophthalmology. doi:10.1177/1120672120902033<br/>
+Poutra, B. (2016, June 14). Fireworks Safety and Common Injuries. Retrieved from <a href="https://texarkanaemergencycenter.com/fireworks-common-injuries/">https://texarkanaemergencycenter.com/fireworks-common-injuries/</a>
+		</p>
+	</div>
+</div>
+</body>
+</html>
